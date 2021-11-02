@@ -133,8 +133,9 @@ Here are some codes in [index.plot](tutorial/06-bar/index.plot):
 
 
 ```go
-x := linspace(0, 2*pi, 20)
-y := [sin(i) for i <- x]
-title("this is title")
-plot(x, y)
+a := [1, 3, 5, 7, 11]
+b := [1, 3, 5, 7, 11]
+c := [1, 3, 5, 7, 11]
+nominalX("a", "b", "c")
+bar(a, b, c)
 ```
