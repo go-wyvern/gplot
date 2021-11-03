@@ -1,4 +1,4 @@
-gplot - A Go+ Drawing Engine
+gplot - A Go+ drawing Engine with a syntax similar to matlab
 
 ========
 
