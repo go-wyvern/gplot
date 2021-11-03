@@ -28,22 +28,6 @@ type Positon struct {
 	row, col int
 }
 
-var defaultFigure = &Figure{
-	w: float64(4 * vg.Inch),
-	h: float64(3 * vg.Inch),
-	pos: Positon{
-		row: 0,
-		col: 0,
-	},
-	rows: 1,
-	cols: 1,
-	Align: [][]*Axis{
-		{
-			NewAxis("Title", "X", "Y"),
-		},
-	},
-}
-
 func (f *Figure) initPlot() {
 	f.w = float64(4 * vg.Inch)
 	f.h = float64(3 * vg.Inch)
@@ -92,18 +76,40 @@ func (f *Figure) Legend(labels ...string) {
 
 func (f *Figure) Plot(args ...interface{}) {
 	f.addLinePoints(args...)
-
-	// if f.pos.col+1 == f.cols && f.pos.row+1 == f.rows {
-	// 	f.show(f.draw())
-	// }
 }
 
 func (f *Figure) Bar(args ...interface{}) {
 	f.addBarPoints(args...)
+}
 
-	// if f.pos.col+1 == f.cols && f.pos.row+1 == f.rows {
-	// 	f.show(f.draw())
-	// }
+func (f *Figure) Subplot(x, y, pos int) {
+	f.rows = x
+	f.cols = y
+	var col int
+	row := pos / y
+	if pos%y == 0 {
+		col = y - 1
+		row = row - 1
+	} else {
+		col = pos%y - 1
+	}
+
+	f.pos.row = row
+	f.pos.col = col
+
+	rows := len(f.Align)
+	if rows != x {
+		f.Align = make([][]*Axis, x)
+	}
+	for j := 0; j < rows; j++ {
+		if len(f.Align[j]) != y {
+			f.Align[j] = make([]*Axis, y)
+		}
+	}
+
+	if f.Align[row][col] == nil {
+		f.Align[row][col] = NewAxis(fmt.Sprintf("title-%d-%d", row, col), "X", "Y")
+	}
 }
 
 func (f *Figure) addLinePoints(args ...interface{}) {
@@ -190,34 +196,4 @@ func (f *Figure) show(img image.Image) {
 	w.SetContent(image)
 	w.SetPadded(false)
 	w.ShowAndRun()
-}
-
-func (f *Figure) Subplot(x, y, pos int) {
-	f.rows = x
-	f.cols = y
-	var col int
-	row := pos / y
-	if pos%y == 0 {
-		col = y - 1
-		row = row - 1
-	} else {
-		col = pos%y - 1
-	}
-
-	f.pos.row = row
-	f.pos.col = col
-
-	rows := len(f.Align)
-	if rows != x {
-		f.Align = make([][]*Axis, x)
-	}
-	for j := 0; j < rows; j++ {
-		if len(f.Align[j]) != y {
-			f.Align[j] = make([]*Axis, y)
-		}
-	}
-
-	if f.Align[row][col] == nil {
-		f.Align[row][col] = NewAxis(fmt.Sprintf("title-%d-%d", row, col), "X", "Y")
-	}
 }
