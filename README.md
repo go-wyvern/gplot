@@ -125,7 +125,7 @@ plot(x, y)
 
 ### tutorial/07-bar
 
-![Screen Shot1](tutorial/07-bar/bar.jpg)
+![Screen Shot1](tutorial/07-bar/bar.png)
 
 Through this example, we can learn how to draw a bar
 
