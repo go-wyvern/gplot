@@ -27,6 +27,5 @@ func (this *index) MainEntry() {
 }
 
 func main() {
-	p:= index{}
-	p.MainEntry()
+	gplot.Gopt_Game_Main(new(index))
 }
