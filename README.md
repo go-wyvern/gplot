@@ -22,7 +22,7 @@ How to run gplot tutorials?
 
 ### tutorial/01-single-plot
 
-![Screen Shot1](tutorial/01-single-plot/single-plot.jpg) 
+![Screen Shot1](tutorial/01-single-plot/single-plot.png) 
 
 Through this example you can learn how to simply draw a line graph.
 
@@ -36,7 +36,7 @@ plot(x, y)
 
 ### tutorial/02-multi-plot
 
-![Screen Shot1](tutorial/02-multil-plot/multi-plot.jpg)
+![Screen Shot1](tutorial/02-multil-plot/multi-plot.png)
 
 In this example, we can learn how to draw multiple lines into one figure.
 
@@ -51,7 +51,7 @@ plot(x, y1, x, y2)
 
 ### tutorial/03-label-plot
 
-![Screen Shot1](tutorial/03-label-plot/label-plot.jpg)
+![Screen Shot1](tutorial/03-label-plot/label-plot.png)
 
 Through this example, we can learn how to add names to axis.
 
@@ -67,7 +67,7 @@ plot(x, y)
 
 ### tutorial/04-subplot
 
-![Screen Shot1](tutorial/04-subplot/subplot.jpg)
+![Screen Shot1](tutorial/04-subplot/subplot.png)
 
 Through this example, we can learn how to draw multiple axis into a figure.
 
@@ -92,7 +92,7 @@ plot(x, y4)
 
 ### tutorial/05-legend
 
-![Screen Shot1](tutorial/05-legend/legend.jpg)
+![Screen Shot1](tutorial/05-legend/legend.png)
 
 Through this example, we can learn how to add legend to the axis.
 
@@ -109,7 +109,7 @@ plot(x, y1, x ,y2)
 
 ### tutorial/06-title
 
-![Screen Shot1](tutorial/06-title/title.jpg)
+![Screen Shot1](tutorial/06-title/title.png)
 
 Through this example, we can learn how to add title to the axis.
 
