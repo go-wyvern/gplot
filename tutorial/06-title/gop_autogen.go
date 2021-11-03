@@ -4,11 +4,13 @@ import (
 	"github.com/go-wyvern/gplot"
 )
 
-type index struct{}
+type index struct {
+	gplot.Figure
+}
 
 func (this *index) MainEntry() {
 //line /Users/wuxinyi/go/src/github.com/go-wyvern/gplot/tutorial/01_single_plot/plot.p:1
-	x := gplot.Linspace(0,2*gplot.Pi,20)
+	x := gplot.Linspace(this, 0, 2*gplot.Pi, 20)
 //line /Users/wuxinyi/go/src/github.com/go-wyvern/gplot/tutorial/01_single_plot/plot.p:2
 	y := func() (_gop_ret []float64) {
 		for
@@ -21,11 +23,11 @@ func (this *index) MainEntry() {
 		return
 	}()
 //line /Users/wuxinyi/go/src/github.com/go-wyvern/gplot/tutorial/01_single_plot/plot.p:3
-	gplot.Title("this is title")
+	gplot.Title(this, "this is title")
 //line /Users/wuxinyi/go/src/github.com/go-wyvern/gplot/tutorial/01_single_plot/plot.p:4
-	gplot.Plot(x, y)
+	gplot.Plot(this, x, y)
 }
 
 func main() {
-	gplot.Gopt_Game_Main(new(index))
+	gplot.Gopt_Plot_Main(new(index))
 }

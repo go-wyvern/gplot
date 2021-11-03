@@ -4,11 +4,13 @@ import (
 	"github.com/go-wyvern/gplot"
 )
 
-type index struct{}
+type index struct{
+	gplot.Figure
+}
 
 func (this *index) MainEntry() {
 //line /Users/wuxinyi/go/src/github.com/go-wyvern/gplot/tutorial/01_single_plot/plot.p:1
-	x := gplot.Linspace(0,2*gplot.Pi,20)
+	x := gplot.Linspace(this, 0,2*gplot.Pi, 20)
 //line /Users/wuxinyi/go/src/github.com/go-wyvern/gplot/tutorial/01_single_plot/plot.p:2
 	y1 := func() (_gop_ret []float64) {
 		for
@@ -51,23 +53,23 @@ func (this *index) MainEntry() {
 		return
 	}()
 //line /Users/wuxinyi/go/src/github.com/go-wyvern/gplot/tutorial/01_single_plot/plot.p:6
-	gplot.Subplot(2, 2, 1)
+	gplot.Subplot(this, 2, 2, 1)
 //line /Users/wuxinyi/go/src/github.com/go-wyvern/gplot/tutorial/01_single_plot/plot.p:7
-	gplot.Plot(x, y1)
+	gplot.Plot(this, x, y1)
 //line /Users/wuxinyi/go/src/github.com/go-wyvern/gplot/tutorial/01_single_plot/plot.p:8
-	gplot.Subplot(2, 2, 2)
+	gplot.Subplot(this, 2, 2, 2)
 //line /Users/wuxinyi/go/src/github.com/go-wyvern/gplot/tutorial/01_single_plot/plot.p:9
-	gplot.Plot(x, y2)
+	gplot.Plot(this, x, y2)
 //line /Users/wuxinyi/go/src/github.com/go-wyvern/gplot/tutorial/01_single_plot/plot.p:10
-	gplot.Subplot(2, 2, 3)
+	gplot.Subplot(this, 2, 2, 3)
 //line /Users/wuxinyi/go/src/github.com/go-wyvern/gplot/tutorial/01_single_plot/plot.p:11
-	gplot.Plot(x, y3)
+	gplot.Plot(this, x, y3)
 //line /Users/wuxinyi/go/src/github.com/go-wyvern/gplot/tutorial/01_single_plot/plot.p:12
-	gplot.Subplot(2, 2, 4)
+	gplot.Subplot(this, 2, 2, 4)
 //line /Users/wuxinyi/go/src/github.com/go-wyvern/gplot/tutorial/01_single_plot/plot.p:13
-	gplot.Plot(x, y4)
+	gplot.Plot(this, x, y4)
 }
 
 func main() {
-	gplot.Gopt_Game_Main(new(index))
+	gplot.Gopt_Plot_Main(new(index))
 }

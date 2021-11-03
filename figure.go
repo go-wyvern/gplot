@@ -44,6 +44,32 @@ var defaultFigure = &Figure{
 	},
 }
 
+func (f *Figure) initPlot() {
+	f.w = float64(4 * vg.Inch)
+	f.h = float64(3 * vg.Inch)
+	f.pos = Positon{
+		row: 0,
+		col: 0,
+	}
+	f.rows = 1
+	f.cols = 1
+	f.Align = [][]*Axis{
+		{
+			NewAxis("Title", "X", "Y"),
+		},
+	}
+}
+
+func (f *Figure) isFinish() bool {
+	return f.pos.col+1 == f.cols && f.pos.row+1 == f.rows
+}
+
+func (f *Figure) finishPlot() {
+	if f.isFinish() {
+		f.show(f.draw())
+	}
+}
+
 func (f *Figure) Xlabel(xlabel string) {
 	f.Align[f.pos.row][f.pos.col].plot.X.Label.Text = xlabel
 }
@@ -65,20 +91,19 @@ func (f *Figure) Legend(labels ...string) {
 }
 
 func (f *Figure) Plot(args ...interface{}) {
-	f.addLinePoints(args...)    
+	f.addLinePoints(args...)
 
-	fmt.Println(f.pos.col,f.pos.row,f.cols,f.rows)
-	if f.pos.col+1 == f.cols && f.pos.row+1 == f.rows {
-		f.show(f.draw())
-	}
+	// if f.pos.col+1 == f.cols && f.pos.row+1 == f.rows {
+	// 	f.show(f.draw())
+	// }
 }
 
 func (f *Figure) Bar(args ...interface{}) {
 	f.addBarPoints(args...)
 
-	if f.pos.col+1 == f.cols && f.pos.row+1 == f.rows {
-		f.show(f.draw())
-	}
+	// if f.pos.col+1 == f.cols && f.pos.row+1 == f.rows {
+	// 	f.show(f.draw())
+	// }
 }
 
 func (f *Figure) addLinePoints(args ...interface{}) {
@@ -115,7 +140,7 @@ func (f *Figure) addBarPoints(args ...interface{}) {
 		bar.Offset = -1*vg.Length(l-1)*w/2 + w*vg.Length(i)
 
 		if len(axis.legend) > 0 {
-				axis.plot.Legend.Add(axis.legend[i], bar)
+			axis.plot.Legend.Add(axis.legend[i], bar)
 		}
 		axis.plot.Add(bar)
 	}
