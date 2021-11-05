@@ -136,6 +136,6 @@ Here are some codes in [index.plot](tutorial/06-bar/index.plot):
 a := [1, 3, 5, 7, 11]
 b := [1, 3, 5, 7, 11]
 c := [1, 3, 5, 7, 11]
-nominalX("a", "b", "c")
+nominalX("s1", "s2", "s3", "s4")
 bar(a, b, c)
 ```
