@@ -1,8 +1,8 @@
 x := linspace(0, 2*pi, 20)
-y1 := [sin(x) for i <- x]
-y2 := [cos(x) for i <- x]
-y3 := [x*x for i <- x]
-y4 := [-1*x*x for i <- x]
+y1 := [sin(i) for i <- x]
+y2 := [cos(i) for i <- x]
+y3 := [i*i for i <- x]
+y4 := [-1*i*i for i <- x]
 subplot(2,2,1)
 plot(x, y1)
 subplot(2,2,2)

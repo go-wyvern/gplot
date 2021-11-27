@@ -1,7 +1,8 @@
 package main
 
 import (
-	"github.com/go-wyvern/gplot"
+	gplot "github.com/go-wyvern/gplot"
+	math "math"
 )
 
 type index struct {
@@ -9,25 +10,24 @@ type index struct {
 }
 
 func (this *index) MainEntry() {
-//line /Users/wuxinyi/go/src/github.com/go-wyvern/gplot/tutorial/01_single_plot/plot.p:1
-	x := gplot.Linspace(this, 0, 2*gplot.Pi, 20)
-//line /Users/wuxinyi/go/src/github.com/go-wyvern/gplot/tutorial/01_single_plot/plot.p:2
+//line /Users/wuxinyi/go/src/github.com/go-wyvern/gplot/tutorial/06-title/index.plot:1
+	x := gplot.Gopt_Figure_Linspace(this, 0, 2*math.Pi, 20)
+//line /Users/wuxinyi/go/src/github.com/go-wyvern/gplot/tutorial/06-title/index.plot:2
 	y := func() (_gop_ret []float64) {
 		for
-//line /Users/wuxinyi/go/src/github.com/go-wyvern/gplot/tutorial/01_single_plot/plot.p:2
+//line /Users/wuxinyi/go/src/github.com/go-wyvern/gplot/tutorial/06-title/index.plot:2
 		_, i := range x {
-//line /Users/wuxinyi/go/src/github.com/go-wyvern/gplot/tutorial/01_single_plot/plot.p:2
-			_gop_ret = append(_gop_ret, gplot.Sin(i))
+//line /Users/wuxinyi/go/src/github.com/go-wyvern/gplot/tutorial/06-title/index.plot:2
+			_gop_ret = append(_gop_ret, math.Sin(i))
 		}
-//line /Users/wuxinyi/go/src/github.com/go-wyvern/gplot/tutorial/01_single_plot/plot.p:2
+//line /Users/wuxinyi/go/src/github.com/go-wyvern/gplot/tutorial/06-title/index.plot:2
 		return
 	}()
-//line /Users/wuxinyi/go/src/github.com/go-wyvern/gplot/tutorial/01_single_plot/plot.p:3
-	gplot.Title(this, "this is title")
-//line /Users/wuxinyi/go/src/github.com/go-wyvern/gplot/tutorial/01_single_plot/plot.p:4
-	gplot.Plot(this, x, y)
+//line /Users/wuxinyi/go/src/github.com/go-wyvern/gplot/tutorial/06-title/index.plot:3
+	this.Title("this is title")
+//line /Users/wuxinyi/go/src/github.com/go-wyvern/gplot/tutorial/06-title/index.plot:4
+	this.Plot(x, y)
 }
-
 func main() {
-	gplot.Gopt_Plot_Main(new(index))
+	gplot.Gopt_Figure_Main(new(index))
 }
