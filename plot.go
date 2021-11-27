@@ -7,6 +7,11 @@ import (
 	"gonum.org/v1/gonum/floats"
 )
 
+const (
+	GopPackage = true
+	Gop_game   = "Figure"
+)
+
 type Ploter interface {
 	initPlot()
 	finishPlot()
@@ -20,7 +25,7 @@ func Gopt_Plot_Main(plot Ploter) {
 }
 
 // gop enter func
-func Plot(plot Ploter, args ...interface{}) {
+func Gopt_Plot_Plot(plot Ploter, args ...interface{}) {
 	v := reflect.ValueOf(plot).Elem()
 	p := instance(v)
 	p.Plot(args...)

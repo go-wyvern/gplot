@@ -54,6 +54,8 @@ func (f *Figure) finishPlot() {
 	}
 }
 
+func (f *Figure) Main() {}
+
 func (f *Figure) Xlabel(xlabel string) {
 	f.Align[f.pos.row][f.pos.col].plot.X.Label.Text = xlabel
 }
