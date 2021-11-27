@@ -17,15 +17,15 @@ type Ploter interface {
 	finishPlot()
 }
 
-// Gopt_Plot_Main is required by Go+ compiler as the entry of a .plot project.
-func Gopt_Plot_Main(plot Ploter) {
+// Gopt_Figure_Main is required by Go+ compiler as the entry of a .plot project.
+func Gopt_Figure_Main(plot Ploter) {
 	plot.initPlot()
 	defer plot.finishPlot()
 	plot.(interface{ MainEntry() }).MainEntry()
 }
 
-// gop enter func
-func Gopt_Plot_Plot(plot Ploter, args ...interface{}) {
+// Plot gop enter func
+func Plot(plot Ploter, args ...interface{}) {
 	v := reflect.ValueOf(plot).Elem()
 	p := instance(v)
 	p.Plot(args...)
@@ -73,7 +73,7 @@ func NominalX(plot Ploter, names ...string) {
 	p.NominalX(names...)
 }
 
-func Linspace(plot Ploter, l, r float64, n int) []float64 {
+func Gopt_Figure_Linspace(plot Ploter, l, r float64, n int) []float64 {
 	s := make([]float64, n)
 	dst := floats.Span(s, l, r)
 	return dst

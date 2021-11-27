@@ -1,3 +1,3 @@
 x := linspace(0, 2*pi, 20)
-y := [sin(x) for i <- x]
+y := [sin(i) for i <- x]
 plot(x, y)
