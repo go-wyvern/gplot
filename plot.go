@@ -25,10 +25,23 @@ func Gopt_Figure_Main(plot Ploter) {
 }
 
 // Plot gop enter func
-func Plot(plot Ploter, args ...interface{}) {
+func Plot__0(plot Ploter, args ...[]float64) {
 	v := reflect.ValueOf(plot).Elem()
 	p := instance(v)
-	p.Plot(args...)
+	p.Plot__0(args...)
+}
+
+func Plot__1(plot Ploter, args ...[]int) {
+	v := reflect.ValueOf(plot).Elem()
+	p := instance(v)
+	p.Plot__1(args...)
+}
+
+// Plot gop enter func
+func Plot__2(plot Ploter, args ...Vector) {
+	v := reflect.ValueOf(plot).Elem()
+	p := instance(v)
+	p.Plot__2(args...)
 }
 
 func Bar(plot Ploter, args ...interface{}) {
@@ -73,10 +86,10 @@ func NominalX(plot Ploter, names ...string) {
 	p.NominalX(names...)
 }
 
-func Gopt_Figure_Linspace(plot Ploter, l, r float64, n int) []float64 {
+func Linspace(l, r float64, n int) Vector {
 	s := make([]float64, n)
 	dst := floats.Span(s, l, r)
-	return dst
+	return newVec(dst)
 }
 
 func instance(plotter reflect.Value) *Figure {

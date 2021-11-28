@@ -74,7 +74,27 @@ func (f *Figure) Legend(labels ...string) {
 	f.Align[f.pos.row][f.pos.col].legend = labels
 }
 
-func (f *Figure) Plot(args ...interface{}) {
+func (f *Figure) Plot__0(args ...[]float64) {
+	var vecs []Vector
+	for _, arg := range args {
+		vecs = append(vecs, newVec(arg))
+	}
+	f.addLinePoints(vecs...)
+}
+
+func (f *Figure) Plot__1(args ...[]int) {
+	var vecs []Vector
+	for _, arg := range args {
+		i := []float64{}
+		for _, a := range arg {
+			i = append(i, float64(a))
+		}
+		vecs = append(vecs, newVec(i))
+	}
+	f.addLinePoints(vecs...)
+}
+
+func (f *Figure) Plot__2(args ...Vector) {
 	f.addLinePoints(args...)
 }
 
@@ -112,7 +132,7 @@ func (f *Figure) Subplot(x, y, pos int) {
 	}
 }
 
-func (f *Figure) addLinePoints(args ...interface{}) {
+func (f *Figure) addLinePoints(args ...Vector) {
 	axis := f.Align[f.pos.row][f.pos.col]
 	if len(args)%2 == 0 {
 		for i := 0; i < len(args)/2; i++ {

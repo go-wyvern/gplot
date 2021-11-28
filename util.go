@@ -7,24 +7,16 @@ import (
 	"gonum.org/v1/plot/plotter"
 )
 
-func buildLinePoints(x, y interface{}) plotter.XYs {
-	xKind := reflect.TypeOf(x).Kind()
-	yKind := reflect.TypeOf(y).Kind()
-	if xKind != reflect.Slice || yKind != reflect.Slice {
-		fmt.Println("x or y are not slice type")
-		return plotter.XYs{}
-	}
-	xValue := reflect.ValueOf(x)
-	yValue := reflect.ValueOf(y)
-	if xValue.Len() != yValue.Len() {
+func buildLinePoints(x, y Vector) plotter.XYs {
+	if x.Len() != y.Len() {
 		fmt.Println("The length of the slice x is not equal to the slice y")
 		return plotter.XYs{}
 	}
 	xys := plotter.XYs{}
-	for i := 0; i < xValue.Len(); i++ {
+	for i := 0; i < x.Len(); i++ {
 		xys = append(xys, plotter.XY{
-			X: xValue.Index(i).Float(),
-			Y: yValue.Index(i).Float(),
+			X: x.AtVec(i),
+			Y: y.AtVec(i),
 		})
 	}
 	return xys
