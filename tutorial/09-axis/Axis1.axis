@@ -1,3 +1,6 @@
-setpos(0)
+setpos(1)
 a:= linspace(0,2*pi,20)
-addline(a,a*a)
+xlabel("x")
+ylabel("x*x")
+title("fig1")
+plot(a,a*a)

@@ -27,15 +27,22 @@ func Gopt_Figure_Main(plot Ploter) {
 }
 
 // Gopt_Figure_Run is required by Go+ compiler as the entry of a .plot project.
-func Gopt_Figure_Run(plot Ploter) {
+func Gopt_Figure_Run(plot Ploter, x, y int) {
 	v := reflect.ValueOf(plot).Elem()
-	// p := instance(v)
-	// TODO
+	t := reflect.TypeOf(plot).Elem()
+	p := instance(v)
 	for i, n := 0, v.NumField(); i < n; i++ {
-		val := v.Field(i).Interface()
-		switch val.(type) {
-		case Axis:
-			val.(interface{ Main() }).Main()
+		typ := t.Field(i).Type
+		m, ok := reflect.PtrTo(typ).MethodByName("Main")
+		if ok {
+			axis := reflect.ValueOf(NewAxis("title", "x", "y"))
+			axis2 := reflect.New(typ)
+			axis3 := axis2.Elem().FieldByName("Axis")
+			axis3.Set(axis.Elem())
+			ax := axis3.Addr().Interface().(*Axis)
+			m.Func.Call([]reflect.Value{axis2})
+			p.Subplot(x, y, ax.pos)
+			p.Align[p.pos.row][p.pos.col] = ax
 		}
 	}
 }

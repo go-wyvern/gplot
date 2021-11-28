@@ -39,8 +39,14 @@ func (a Vector) Gop_Mul(b Vector) Vector {
 }
 
 // Gop_Quo: func (a vector) / (b vector) vector {
-func (a Vector) Gop_Quo(b Vector) *Vector {
+func (a Vector) Gop_Quo(b Vector) Vector {
 	vec := mat.NewVecDense(a.Len(), nil)
 	vec.DivElemVec(a, b)
-	return &Vector{vec}
+	return Vector{vec}
+}
+
+func Scale(a float64, b Vector) Vector {
+	vec := mat.NewVecDense(b.Len(), nil)
+	vec.ScaleVec(float64(a), b)
+	return Vector{vec}
 }

@@ -74,15 +74,15 @@ func (f *Figure) Legend(labels ...string) {
 }
 
 func (f *Figure) Plot__0(args ...[]float64) {
-	f.Align[f.pos.row][f.pos.col].Addline__0(args...)
+	f.Align[f.pos.row][f.pos.col].Plot__0(args...)
 }
 
 func (f *Figure) Plot__1(args ...[]int) {
-	f.Align[f.pos.row][f.pos.col].Addline__1(args...)
+	f.Align[f.pos.row][f.pos.col].Plot__1(args...)
 }
 
 func (f *Figure) Plot__2(args ...Vector) {
-	f.Align[f.pos.row][f.pos.col].Addline__2(args...)
+	f.Align[f.pos.row][f.pos.col].Plot__2(args...)
 }
 
 func (f *Figure) Bar(args ...interface{}) {
@@ -131,12 +131,12 @@ func (f *Figure) addBarPoints(args ...interface{}) {
 		bar.Offset = -1*vg.Length(l-1)*w/2 + w*vg.Length(i)
 
 		if len(axis.legend) > 0 {
-			axis.plot.Legend.Add(axis.legend[i], bar)
+			axis.p.Legend.Add(axis.legend[i], bar)
 		}
-		axis.plot.Add(bar)
+		axis.p.Add(bar)
 	}
 	if len(axis.nominalX) > 0 {
-		axis.plot.NominalX(axis.nominalX...)
+		axis.p.NominalX(axis.nominalX...)
 	}
 }
 
@@ -163,7 +163,7 @@ func (f *Figure) draw() image.Image {
 		for i := 0; i < f.cols; i++ {
 			axis := f.Align[j][i]
 			if axis != nil {
-				plots[j][i] = axis.plot
+				plots[j][i] = axis.p
 				if plots[j][i] != nil {
 					plots[j][i].Draw(canvases[j][i])
 				}

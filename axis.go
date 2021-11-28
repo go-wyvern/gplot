@@ -9,10 +9,10 @@ import (
 )
 
 type Axis struct {
-	plot *plot.Plot
-	X    string
-	Y    string
-	Tit  string
+	p   *plot.Plot
+	X   string
+	Y   string
+	Tit string
 
 	pos      int
 	nominalX []string
@@ -23,10 +23,10 @@ func NewAxis(title, x, y string) *Axis {
 	p := plot.New()
 	p.Title.Padding = 10
 	return &Axis{
-		plot: p,
-		X:    x,
-		Y:    y,
-		Tit:  title,
+		p:   p,
+		X:   x,
+		Y:   y,
+		Tit: title,
 	}
 }
 
@@ -34,7 +34,7 @@ func (c *Axis) Setpos(pos int) {
 	c.pos = pos
 }
 
-func (c *Axis) Addline__0(args ...[]float64) {
+func (c *Axis) Plot__0(args ...[]float64) {
 	var vecs []Vector
 	for _, arg := range args {
 		vecs = append(vecs, newVec(arg))
@@ -42,7 +42,7 @@ func (c *Axis) Addline__0(args ...[]float64) {
 	c.newline(vecs...)
 }
 
-func (c *Axis) Addline__1(args ...[]int) {
+func (c *Axis) Plot__1(args ...[]int) {
 	var vecs []Vector
 	for _, arg := range args {
 		i := []float64{}
@@ -54,7 +54,7 @@ func (c *Axis) Addline__1(args ...[]int) {
 	c.newline(vecs...)
 }
 
-func (c *Axis) Addline__2(args ...Vector) {
+func (c *Axis) Plot__2(args ...Vector) {
 	c.newline(args...)
 }
 
@@ -70,22 +70,22 @@ func (c *Axis) newline(args ...Vector) {
 
 		line.Color = plotutil.Color(i)
 		if len(c.legend) > 0 {
-			c.plot.Legend.Add(c.legend[i], line)
+			c.p.Legend.Add(c.legend[i], line)
 		}
-		c.plot.Add(line)
+		c.p.Add(line)
 	}
 }
 
 func (a *Axis) Xlabel(xlabel string) {
-	a.plot.X.Label.Text = xlabel
+	a.p.X.Label.Text = xlabel
 }
 
 func (a *Axis) Ylabel(ylabel string) {
-	a.plot.Y.Label.Text = ylabel
+	a.p.Y.Label.Text = ylabel
 }
 
 func (a *Axis) Title(title string) {
-	a.plot.Title.Text = title
+	a.p.Title.Text = title
 }
 
 func (a *Axis) Legend(labels []string) {

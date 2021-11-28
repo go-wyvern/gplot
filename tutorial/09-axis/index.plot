@@ -3,4 +3,4 @@ var (
 	Axis2     Axis2
 )
 
-run
+run(1, 2)

@@ -1,3 +1,6 @@
-setpos(1)
+setpos(2)
 a:= linspace(0,2*pi,20)
-addline(a,sin(a))
+xlabel("x")
+ylabel("sin(x)")
+title("fig2")
+plot(a,sin(a))
