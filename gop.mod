@@ -1,5 +1,5 @@
 module github.com/go-wyvern/gplot
 
-gop 1.0.22
+gop 1.0
 
-classfile .plot "" github.com/go-wyvern/gplot math
+classfile .plot .axis github.com/go-wyvern/gplot

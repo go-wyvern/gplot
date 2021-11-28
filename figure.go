@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"image"
 	"image/color"
-	"log"
 
 	"fyne.io/fyne/app"
 	"fyne.io/fyne/canvas"
@@ -55,15 +54,15 @@ func (f *Figure) finishPlot() {
 }
 
 func (f *Figure) Xlabel(xlabel string) {
-	f.Align[f.pos.row][f.pos.col].plot.X.Label.Text = xlabel
+	f.Align[f.pos.row][f.pos.col].Xlabel(xlabel)
 }
 
 func (f *Figure) Ylabel(ylabel string) {
-	f.Align[f.pos.row][f.pos.col].plot.Y.Label.Text = ylabel
+	f.Align[f.pos.row][f.pos.col].Ylabel(ylabel)
 }
 
 func (f *Figure) Title(title string) {
-	f.Align[f.pos.row][f.pos.col].plot.Title.Text = title
+	f.Align[f.pos.row][f.pos.col].Title(title)
 }
 
 func (f *Figure) NominalX(names ...string) {
@@ -71,31 +70,19 @@ func (f *Figure) NominalX(names ...string) {
 }
 
 func (f *Figure) Legend(labels ...string) {
-	f.Align[f.pos.row][f.pos.col].legend = labels
+	f.Align[f.pos.row][f.pos.col].Legend(labels)
 }
 
 func (f *Figure) Plot__0(args ...[]float64) {
-	var vecs []Vector
-	for _, arg := range args {
-		vecs = append(vecs, newVec(arg))
-	}
-	f.addLinePoints(vecs...)
+	f.Align[f.pos.row][f.pos.col].Addline__0(args...)
 }
 
 func (f *Figure) Plot__1(args ...[]int) {
-	var vecs []Vector
-	for _, arg := range args {
-		i := []float64{}
-		for _, a := range arg {
-			i = append(i, float64(a))
-		}
-		vecs = append(vecs, newVec(i))
-	}
-	f.addLinePoints(vecs...)
+	f.Align[f.pos.row][f.pos.col].Addline__1(args...)
 }
 
 func (f *Figure) Plot__2(args ...Vector) {
-	f.addLinePoints(args...)
+	f.Align[f.pos.row][f.pos.col].Addline__2(args...)
 }
 
 func (f *Figure) Bar(args ...interface{}) {
@@ -129,28 +116,6 @@ func (f *Figure) Subplot(x, y, pos int) {
 
 	if f.Align[row][col] == nil {
 		f.Align[row][col] = NewAxis(fmt.Sprintf("title-%d-%d", row, col), "X", "Y")
-	}
-}
-
-func (f *Figure) addLinePoints(args ...Vector) {
-	axis := f.Align[f.pos.row][f.pos.col]
-	if len(args)%2 == 0 {
-		for i := 0; i < len(args)/2; i++ {
-			x := args[2*i]
-			y := args[2*i+1]
-			points := buildLinePoints(x, y)
-			line, err := plotter.NewLine(points)
-			if err != nil {
-				log.Fatal(err)
-			}
-
-			line.Color = plotutil.Color(i)
-			if len(axis.legend) > 0 {
-				axis.plot.Legend.Add(axis.legend[i], line)
-			}
-			axis.plot.Add(line)
-			// plotutil.AddLinePoints(f.Align[f.pos.row][f.pos.col].plot, points)
-		}
 	}
 }
 

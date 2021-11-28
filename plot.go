@@ -3,6 +3,7 @@ package gplot
 import (
 	"log"
 	"reflect"
+	"unsafe"
 
 	"gonum.org/v1/gonum/floats"
 )
@@ -10,6 +11,7 @@ import (
 const (
 	GopPackage = true
 	Gop_game   = "Figure"
+	Gop_sprite = "Axis"
 )
 
 type Ploter interface {
@@ -22,6 +24,20 @@ func Gopt_Figure_Main(plot Ploter) {
 	plot.initPlot()
 	defer plot.finishPlot()
 	plot.(interface{ MainEntry() }).MainEntry()
+}
+
+// Gopt_Figure_Run is required by Go+ compiler as the entry of a .plot project.
+func Gopt_Figure_Run(plot Ploter) {
+	v := reflect.ValueOf(plot).Elem()
+	// p := instance(v)
+	// TODO
+	for i, n := 0, v.NumField(); i < n; i++ {
+		val := v.Field(i).Interface()
+		switch val.(type) {
+		case Axis:
+			val.(interface{ Main() }).Main()
+		}
+	}
 }
 
 // Plot gop enter func
@@ -98,4 +114,26 @@ func instance(plotter reflect.Value) *Figure {
 		log.Panicf("type %v doesn't has field gplot.Figure", plotter.Type())
 	}
 	return fld.Addr().Interface().(*Figure)
+}
+
+func getFieldPtrOrAlloc(v reflect.Value, i int) (name string, val interface{}) {
+	tFld := v.Type().Field(i)
+	vFld := v.Field(i)
+	typ := tFld.Type
+	word := unsafe.Pointer(vFld.Addr().Pointer())
+	ret := makeEmptyInterface(reflect.PtrTo(typ), word)
+	return tFld.Name, ret
+}
+
+// emptyInterface is the header for an interface{} value.
+type emptyInterface struct {
+	typ  unsafe.Pointer
+	word unsafe.Pointer
+}
+
+func makeEmptyInterface(typ reflect.Type, word unsafe.Pointer) (i interface{}) {
+	e := (*emptyInterface)(unsafe.Pointer(&i))
+	etyp := (*emptyInterface)(unsafe.Pointer(&typ))
+	e.typ, e.word = etyp.word, word
+	return
 }
