@@ -1,2 +1,3 @@
 .gop
 gop_autogen.go
+go.sum
