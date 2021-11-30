@@ -1,15 +1,13 @@
 package gplot
 
 import (
-	"fmt"
 	"image"
 	"image/color"
 
+	"fyne.io/fyne"
 	"fyne.io/fyne/app"
 	"fyne.io/fyne/canvas"
 	"gonum.org/v1/plot"
-	"gonum.org/v1/plot/plotter"
-	"gonum.org/v1/plot/plotutil"
 	"gonum.org/v1/plot/vg"
 	"gonum.org/v1/plot/vg/draw"
 	"gonum.org/v1/plot/vg/vgimg"
@@ -20,6 +18,7 @@ type Figure struct {
 	pos        Positon
 	w, h       float64
 	rows, cols int
+	app        fyne.App
 	canvas     *vgimg.Canvas
 }
 
@@ -38,9 +37,10 @@ func (f *Figure) initPlot() {
 	f.cols = 1
 	f.Align = [][]*Axis{
 		{
-			NewAxis("Title", "X", "Y"),
+			NewAxis(),
 		},
 	}
+	f.app = app.New()
 }
 
 func (f *Figure) isFinish() bool {
@@ -66,7 +66,7 @@ func (f *Figure) Title(title string) {
 }
 
 func (f *Figure) NominalX(names ...string) {
-	f.Align[f.pos.row][f.pos.col].nominalX = names
+	f.Align[f.pos.row][f.pos.col].NominalX(names...)
 }
 
 func (f *Figure) Legend(labels ...string) {
@@ -86,7 +86,7 @@ func (f *Figure) Plot__2(args ...Vector) {
 }
 
 func (f *Figure) Bar(args ...interface{}) {
-	f.addBarPoints(args...)
+	f.Align[f.pos.row][f.pos.col].Bar(args...)
 }
 
 func (f *Figure) Subplot(x, y, pos int) {
@@ -115,28 +115,7 @@ func (f *Figure) Subplot(x, y, pos int) {
 	}
 
 	if f.Align[row][col] == nil {
-		f.Align[row][col] = NewAxis(fmt.Sprintf("title-%d-%d", row, col), "X", "Y")
-	}
-}
-
-func (f *Figure) addBarPoints(args ...interface{}) {
-	axis := f.Align[f.pos.row][f.pos.col]
-	l := len(args)
-	for i, arg := range args {
-		w := vg.Points(16)
-		group := buildBarGroup(arg)
-		bar, _ := plotter.NewBarChart(group, w)
-
-		bar.Color = plotutil.Color(i)
-		bar.Offset = -1*vg.Length(l-1)*w/2 + w*vg.Length(i)
-
-		if len(axis.legend) > 0 {
-			axis.p.Legend.Add(axis.legend[i], bar)
-		}
-		axis.p.Add(bar)
-	}
-	if len(axis.nominalX) > 0 {
-		axis.p.NominalX(axis.nominalX...)
+		f.Align[row][col] = NewAxis()
 	}
 }
 
@@ -176,8 +155,7 @@ func (f *Figure) draw() image.Image {
 func (f *Figure) show(img image.Image) {
 	image := canvas.NewImageFromImage(img)
 	image.FillMode = canvas.ImageFillOriginal
-	app := app.New()
-	w := app.NewWindow("Figure")
+	w := f.app.NewWindow("Figure")
 	w.SetContent(image)
 	w.SetPadded(false)
 	w.ShowAndRun()
