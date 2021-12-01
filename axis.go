@@ -12,7 +12,6 @@ import (
 type Axis struct {
 	p *plot.Plot
 
-	pos    int
 	legend []string
 }
 
@@ -70,10 +69,6 @@ func (a *Axis) Legend(labels []string) {
 
 func (c *Axis) NominalX(names ...string) {
 	c.p.NominalX(names...)
-}
-
-func (c *Axis) Setpos(pos int) {
-	c.pos = pos
 }
 
 func (c *Axis) addLine(args ...Vector) {

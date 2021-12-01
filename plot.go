@@ -3,7 +3,6 @@ package gplot
 import (
 	"log"
 	"reflect"
-	"unsafe"
 
 	"gonum.org/v1/gonum/floats"
 )
@@ -31,18 +30,16 @@ func Gopt_Figure_Run(plot Ploter, x, y int) {
 	v := reflect.ValueOf(plot).Elem()
 	t := reflect.TypeOf(plot).Elem()
 	p := instance(v)
+	pos := 0
 	for i, n := 0, v.NumField(); i < n; i++ {
 		typ := t.Field(i).Type
 		m, ok := reflect.PtrTo(typ).MethodByName("Main")
 		if ok {
-			axis := reflect.ValueOf(NewAxis())
-			axis2 := reflect.New(typ)
-			axis3 := axis2.Elem().FieldByName("Axis")
-			axis3.Set(axis.Elem())
-			ax := axis3.Addr().Interface().(*Axis)
-			m.Func.Call([]reflect.Value{axis2})
-			p.Subplot(x, y, ax.pos)
-			p.Align[p.pos.row][p.pos.col] = ax
+			parent, axis := instanceAxis(t.Field(i))
+			pos += 1
+			m.Func.Call([]reflect.Value{parent})
+			p.Subplot(x, y, pos)
+			p.Align[p.pos.row][p.pos.col] = axis
 		}
 	}
 }
@@ -61,24 +58,10 @@ func instance(plotter reflect.Value) *Figure {
 	return fld.Addr().Interface().(*Figure)
 }
 
-func getFieldPtrOrAlloc(v reflect.Value, i int) (name string, val interface{}) {
-	tFld := v.Type().Field(i)
-	vFld := v.Field(i)
-	typ := tFld.Type
-	word := unsafe.Pointer(vFld.Addr().Pointer())
-	ret := makeEmptyInterface(reflect.PtrTo(typ), word)
-	return tFld.Name, ret
-}
-
-// emptyInterface is the header for an interface{} value.
-type emptyInterface struct {
-	typ  unsafe.Pointer
-	word unsafe.Pointer
-}
-
-func makeEmptyInterface(typ reflect.Type, word unsafe.Pointer) (i interface{}) {
-	e := (*emptyInterface)(unsafe.Pointer(&i))
-	etyp := (*emptyInterface)(unsafe.Pointer(&typ))
-	e.typ, e.word = etyp.word, word
-	return
+func instanceAxis(field reflect.StructField) (reflect.Value, *Axis) {
+	typ := field.Type
+	parent := reflect.New(typ)
+	axis := parent.Elem().FieldByName("Axis")
+	axis.Set(reflect.ValueOf(NewAxis()).Elem())
+	return parent, axis.Addr().Interface().(*Axis)
 }

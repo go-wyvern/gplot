@@ -19,7 +19,6 @@ type Figure struct {
 	w, h       float64
 	rows, cols int
 	app        fyne.App
-	canvas     *vgimg.Canvas
 }
 
 type Positon struct {
@@ -92,6 +91,29 @@ func (f *Figure) Bar(args ...interface{}) {
 func (f *Figure) Subplot(x, y, pos int) {
 	f.rows = x
 	f.cols = y
+
+	f.pos = toPositon(x, y, pos)
+	f.Align = makeAlign(f.Align, x, y)
+
+	if f.Align[f.pos.row][f.pos.col] == nil {
+		f.Align[f.pos.row][f.pos.col] = NewAxis()
+	}
+}
+
+func makeAlign(align [][]*Axis, x, y int) [][]*Axis {
+	rows := len(align)
+	if rows != x {
+		align = make([][]*Axis, x)
+	}
+	for j := 0; j < rows; j++ {
+		if len(align[j]) != y {
+			align[j] = make([]*Axis, y)
+		}
+	}
+	return align
+}
+
+func toPositon(x, y, pos int) Positon {
 	var col int
 	row := pos / y
 	if pos%y == 0 {
@@ -100,22 +122,9 @@ func (f *Figure) Subplot(x, y, pos int) {
 	} else {
 		col = pos%y - 1
 	}
-
-	f.pos.row = row
-	f.pos.col = col
-
-	rows := len(f.Align)
-	if rows != x {
-		f.Align = make([][]*Axis, x)
-	}
-	for j := 0; j < rows; j++ {
-		if len(f.Align[j]) != y {
-			f.Align[j] = make([]*Axis, y)
-		}
-	}
-
-	if f.Align[row][col] == nil {
-		f.Align[row][col] = NewAxis()
+	return Positon{
+		row: row,
+		col: col,
 	}
 }
 
