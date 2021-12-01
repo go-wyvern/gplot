@@ -45,6 +45,7 @@ func (a Vector) Gop_Quo(b Vector) Vector {
 	return Vector{vec}
 }
 
+// Scale a vector
 func Scale(a float64, b Vector) Vector {
 	vec := mat.NewVecDense(b.Len(), nil)
 	vec.ScaleVec(float64(a), b)
