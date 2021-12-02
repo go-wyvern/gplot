@@ -30,7 +30,7 @@ Here are some codes in [index.plot](tutorial/01-single-plot/index.plot):
 
 ```go
 x := linspace(0, 2*pi, 20)
-y := [sin(x) for i <- x]
+y := [sin(i) for i <- x]
 plot(x, y)
 ```
 
@@ -44,8 +44,8 @@ Here are all the codes of [index.plot](tutorial/02-multi-plot/index.plot):
 
 ```go
 x := linspace(0, 2*pi, 20)
-y1 := [sin(x) for i <- x]
-y2 := [cos(x) for i <- x]
+y1 := [sin(i) for i <- x]
+y2 := [cos(i) for i <- x]
 plot(x, y1, x, y2)
 ```
 
@@ -59,7 +59,7 @@ Here are some codes in [index.plot](tutorial/03-label-plot/index.plot):
 
 ```go
 x := linspace(0, 2*pi, 20)
-y := [sin(x) for i <- x]
+y := [sin(i) for i <- x]
 xlabel("x")
 ylabel("sin(x)")
 plot(x, y)
@@ -76,10 +76,10 @@ Here are some codes in [index.plot](tutorial/04-subplot/index.plot):
 
 ```go
 x := linspace(0, 2*pi, 20)
-y1 := [sin(x) for i <- x]
-y2 := [cos(x) for i <- x]
-y3 := [x*x for i <- x]
-y4 := [-1*x*x for i <- x]
+y1 := [sin(i) for i <- x]
+y2 := [cos(i) for i <- x]
+y3 := [i*i for i <- x]
+y4 := [-1*i*i for i <- x]
 subplot(2,2,1)
 plot(x, y1)
 subplot(2,2,2)
