@@ -1,5 +1,5 @@
-module github.com/go-wyvern/gplot
+gop 1.2
 
-gop 1.0
+project .plot Figure github.com/go-wyvern/gplot
 
-classfile .plot .axis github.com/go-wyvern/gplot
+class .axis Axis

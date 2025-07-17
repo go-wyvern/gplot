@@ -1,2 +1,2 @@
-a:= linspace(0,2*pi,20)
+a:= linspace(0,2*Pi,20)
 plot(a,a*a)

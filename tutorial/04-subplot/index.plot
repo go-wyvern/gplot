@@ -1,4 +1,4 @@
-x := linspace(0, 2*pi, 20)
+x := linspace(0, 2*Pi, 20)
 subplot(2,2,1)
 plot(x, sin(x))
 subplot(2,2,2)
