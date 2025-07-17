@@ -11,14 +11,10 @@ gplot - A Go+ drawing Engine with a syntax similar to matlab
 
 How to run gplot tutorials?
 
-* Download Go+ and build it. See https://github.com/goplus/gop#how-to-build. (Depends on Go+ ver 1.1 or higher)
-* Download gplot and build it.
-  * git clone `git@github.com:go-wyvern/gplot.git`
-  * cd gplot
-  * go install -v ./...
+* Download XGo and build it. See https://github.com/goplus/xgo#how-to-build. (Depends on Go+ ver 1.2 or higher)
 * Build tutorials and run.
   * cd tutorial/xxx
-  * gop run .
+  * xgo run .
 
 ### tutorial/01-single-plot
 
